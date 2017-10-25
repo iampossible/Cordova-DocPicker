@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com-impossible-DocumentPicker" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>DocumentPicker</name>
+    <js-module name="DocumentPicker" src="www/DocumentPicker.js">
+        <clobbers target="documentPicker" />
+    </js-module>
+  <source-file src="src/DocumentPicker.swift" />
+</plugin>
