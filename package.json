@@ -1,12 +1,12 @@
 {
   "name": "DocumentPicker",
   "version": "1.0.0",
-  "description": "",
+  "description": "iOS plugin for Cordova writting in Swift.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["cordova", "plugin", "documentpicker"],
+  "author": "Impossible",
   "license": "ISC"
 }
