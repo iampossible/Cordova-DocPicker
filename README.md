@@ -1,2 +1,2 @@
 # Cordova-DocPicker
-iOS plugin for Cordova writting in Swift.
+iOS plugin for Cordova written in Swift.
