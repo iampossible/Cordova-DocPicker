@@ -13,7 +13,7 @@
             <clobbers target="documentPicker" />
         </js-module>
 
-        <source-file src="src/DocumentPicker.swift" />
+        <source-file src="src/ios/DocumentPicker.swift" />
 
         <dependency id="cordova-plugin-add-swift-support" version="1.6.1"/>
     </platform>
