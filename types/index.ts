@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Cordova, Plugin, IonicNativePlugin } from '@ionic-native/core';
 
 
-enum DocumentPickerOptions {
+export enum DocumentPickerOptions {
   PDF = 'pdf',
   IMAGE = 'image',
   ALL = 'all'
@@ -25,6 +25,6 @@ enum DocumentPickerOptions {
 export class DocumentPicker extends IonicNativePlugin {
 
   @Cordova()
-  getFile(options?: DocumentPickerOptions): Promise<string> { return; }
+  getFile(options?: DocumentPickerOptions | string): Promise<string> { return; }
 
 }
