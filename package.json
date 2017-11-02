@@ -1,5 +1,5 @@
 {
-  "name": "DocumentPicker",
+  "name": "cordova-ios-document-picker",
   "version": "1.0.0",
   "description": "iOS plugin for Cordova writting in Swift.",
   "main": "index.js",
