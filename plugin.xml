@@ -10,7 +10,7 @@
         </config-file>
 
         <js-module name="DocumentPicker" src="www/DocumentPicker.js">
-            <clobbers target="documentPicker" />
+            <clobbers target="DocumentPicker" />
         </js-module>
 
         <source-file src="src/ios/DocumentPicker.swift" />
