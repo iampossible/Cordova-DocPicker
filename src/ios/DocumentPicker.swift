@@ -1,8 +1,8 @@
 
 enum DocumentTypes: String {
-    case pdf = "pdf"
-    case image = "image"
-    case all = "all"
+    case pdf
+    case image
+    case all
 
     var uti: String {
         switch self {
@@ -17,75 +17,60 @@ enum DocumentTypes: String {
 class DocumentPicker : CDVPlugin {
     var commandCallback: String?
 
-
     @objc(getFile:)
     func getFile(command: CDVInvokedUrlCommand) {
 
-        var arguments: [DocumentTypes] = []
+        DispatchQueue.global(qos: .background).async {
+            var arguments: [DocumentTypes] = []
 
-        command.arguments.forEach({
-            if let key =  $0 as? String, let type = DocumentTypes(rawValue: key) {
-                arguments.append(type)
-            }else if let array = $0 as? [String] {
-                array.forEach({
-                    if let type = DocumentTypes(rawValue: $0) {
-                        arguments.append(type)
-                    }
-                })
+            command.arguments.forEach {
+                if let key =  $0 as? String, let type = DocumentTypes(rawValue: key) {
+                    arguments.append(type)
+                } else if let array = $0 as? [String] {
+                    arguments = array.compactMap { DocumentTypes(rawValue: $0) }
+                }
             }
 
-        })
-
-        if arguments.count < 1 {
-            sendError("Didn't receive any argument.")
-        }else{
-            commandCallback = command.callbackId
-            callPicker(withTypes: arguments)
+            if arguments.isEmpty {
+                self.sendError("Didn't receive any argument.")
+            } else {
+                self.commandCallback = command.callbackId
+                self.callPicker(withTypes: arguments)
+            }
         }
     }
 
     func callPicker(withTypes documentTypes: [DocumentTypes]) {
 
-        let utis = documentTypes.flatMap({return $0.uti })
+        let utis = documentTypes.map { $0.uti }
 
         let picker = UIDocumentPickerViewController(documentTypes: utis, in: .import)
         picker.delegate = self
-        self.viewController.present(picker, animated: true, completion: nil)
 
-    }
-
-    func documentWasSelected(document: URL) {
-        if let commandId = commandCallback  {
-
-            let pluginResult = CDVPluginResult(
-                status: CDVCommandStatus_OK,
-                messageAs: document.absoluteString
-            )
-
-            self.commandDelegate!.send(
-                pluginResult,
-                callbackId: commandId
-            )
-
-            commandCallback = nil
-        }else{
-            sendError("Unexpected error. Try again?")
+        DispatchQueue.main.async {
+            self.viewController.present(picker, animated: true, completion: nil)
         }
     }
 
+    func documentWasSelected(document: URL) {
+        self.sendResult(.init(status: CDVCommandStatus_OK, messageAs: document.absoluteString))
+        self.commandCallback = nil
+    }
+
     func sendError(_ message: String) {
+        sendResult(.init(status: CDVCommandStatus_ERROR, messageAs: message))
+    }
 
-        let pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_ERROR,
-            messageAs: message
-        )
+}
 
-        self.commandDelegate!.send(
-            pluginResult,
+private extension DocumentPicker {
+    func sendResult(_ result: CDVPluginResult) {
+
+        self.commandDelegate.send(
+            result,
             callbackId: commandCallback
         )
     }
-
 }
 
 extension DocumentPicker: UIDocumentPickerDelegate {
@@ -105,5 +90,4 @@ extension DocumentPicker: UIDocumentPickerDelegate {
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         sendError("User canceled.")
     }
-
 }
