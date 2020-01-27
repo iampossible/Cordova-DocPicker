@@ -5,7 +5,7 @@ Opens the file picker on iOS for the user to select a file, returns a file URI.
 Allows the user to upload files from icloud.
 
 # Installation
-Navigate to your project directory and install the plugin with `cordova plugin add https://github.com/iampossible/Cordova-DocPicker.git`.
+Navigate to your project directory and install the plugin with `cordova plugin add https://github.com/iampossible/Cordova-DocPicker.git` or `npm i cordova-documentpicker`.
 
 # Methods
 There is only one method available all return promises, or accept success and error callbacks.

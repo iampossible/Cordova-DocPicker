@@ -3,12 +3,16 @@ enum DocumentTypes: String {
     case pdf
     case image
     case all
+    case gif
+    case video
 
     var uti: String {
         switch self {
             case .pdf: return "com.adobe.pdf"
             case .image: return "public.image"
             case .all: return "public.data"
+            case .gif: return "com.compuserve.gif"
+            case .video: return "public.movie"
         }
     }
 }
@@ -44,10 +48,11 @@ class DocumentPicker : CDVPlugin {
 
         let utis = documentTypes.map { $0.uti }
 
-        let picker = UIDocumentPickerViewController(documentTypes: utis, in: .import)
-        picker.delegate = self
-
         DispatchQueue.main.async {
+
+            let picker = UIDocumentPickerViewController(documentTypes: utis, in: .import)
+            picker.delegate = self
+
             self.viewController.present(picker, animated: true, completion: nil)
         }
     }
