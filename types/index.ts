@@ -11,7 +11,13 @@ export enum DocumentPickerOptions {
   /** show only image files */
   IMAGE = 'image',
   /** show all files */
-  ALL = 'all'
+  ALL = 'all',
+
+  /** show gifs */
+  GIF = 'gif',
+
+  /** show only video files (.mp4, .MPEG, .avi, etc) */
+  VIDEO = 'video'
 }
 
 
