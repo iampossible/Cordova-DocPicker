@@ -52,6 +52,7 @@ class DocumentPicker : CDVPlugin {
 
             let picker = UIDocumentPickerViewController(documentTypes: utis, in: .import)
             picker.delegate = self
+            picker.isModalInPresentation=true
 
             self.viewController.present(picker, animated: true, completion: nil)
         }
@@ -77,6 +78,15 @@ private extension DocumentPicker {
         )
     }
 }
+
+/*
+private extension DocumentPicker:UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        sendError("User Cancelled")
+    }
+}
+*/
+
 
 extension DocumentPicker: UIDocumentPickerDelegate {
 
