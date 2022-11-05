@@ -52,6 +52,7 @@ class DocumentPicker : CDVPlugin {
 
             let picker = UIDocumentPickerViewController(documentTypes: utis, in: .import)
             picker.delegate = self
+            picker.presentationController?.delegate = self
 
             self.viewController.present(picker, animated: true, completion: nil)
         }
@@ -78,6 +79,14 @@ private extension DocumentPicker {
     }
 }
 
+
+extension DocumentPicker:UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        sendError("User Dismissed")
+    }
+}
+
+
 extension DocumentPicker: UIDocumentPickerDelegate {
 
     @available(iOS 11.0, *)
@@ -86,7 +95,7 @@ extension DocumentPicker: UIDocumentPickerDelegate {
             documentWasSelected(document: url)
         }
     }
-
+    
 
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL){
         documentWasSelected(document: url)
